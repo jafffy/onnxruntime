@@ -58,9 +58,9 @@ Arguments:
 
         .macro BroadcastByteDWords TargetYmm, TargetXmm, Source, DataType
 .ifeqs "\DataType\()","S8"
-        vpmovsxbd \TargetXmm\(),BYTE PTR \Source\()
+        vpmovsxbd \TargetXmm\(),\Source\()
 .else
-        vpmovzxbd \TargetXmm\(),BYTE PTR \Source\()
+        vpmovzxbd \TargetXmm\(),\Source\()
 .endif
         vpbroadcastd \TargetYmm\(),\TargetXmm\()
         .endm

@@ -550,7 +550,7 @@ struct TBroadcastOutput {
       ORT_ENFORCE(start_offset >= 0 && real_end >= 0 && start_offset <= real_end && real_end <= len,
                   "Invalid start/ending offset [", start_offset, ",", real_end, ") for tensor of length:", len);
       ORT_ENFORCE(start_offset % span_size == 0 && real_end % span_size == 0,
-                  "Broadcast Output range [", start_offset, ", ", real_offset,
+                  "Broadcast Output range [", start_offset, ", ", real_end,
                   ") are not at boundary of span with size:", span_size);
     }
     output_ = tensor.template MutableData<T>() + start_offset;
