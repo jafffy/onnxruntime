@@ -266,7 +266,14 @@ QLinearBinaryOpAvx2 MACRO DataType, OpName, OpInstruction
         mov     r8,QLinearBinaryOpFrame.OutputC[rsp]
         mov     rdx,QLinearBinaryOpFrame.LengthA[rsp]
         cmp     rdx,QWORD PTR 1
-        jae     QLinear&OpName&&DataType&Avx2Process8EntranceScalarOnVector
+        jz      QLinear&OpName&&DataType&Avx2Process8EntranceScalarOnVector
+        mov     rdx,QLinearBinaryOpFrame.LengthB[rsp]
+        cmp     rdx,QWORD PTR 1
+        jz      QLinear&OpName&&DataType&Avx2Process8EntranceVectorOnScalar
+        cmp     rdx,QLinearBinaryOpFrame.LengthA[rsp]
+        jae     QLinear&OpName&&DataType&Avx2Process8EntranceVectorOnVector
+        mov     rdx,QLinearBinaryOpFrame.LengthA[rsp]
+        jmp     QLinear&OpName&&DataType&Avx2Process8EntranceVectorOnVector
 
 QLinear&OpName&&DataType&Avx2Process8EntranceScalarOnVector:
         mov     rdx,QLinearBinaryOpFrame.LengthB[rsp]

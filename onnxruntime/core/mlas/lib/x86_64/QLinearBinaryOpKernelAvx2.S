@@ -46,21 +46,23 @@ Macro Description:
 
 Arguments:
 
-   Source - Supplies address of 8bits integers.
+   TargetYmm - target ymm register.
 
-   Target - target ymm register.
+   TargetXmm - intermediate xmm register.
+
+   Source - Supplies address of 8bits integer.
 
    DataType - S8 or U8
 
 --*/
 
-        .macro BroadcastByteDWords Target, TargetXmm, Source, DataType
+        .macro BroadcastByteDWords TargetYmm, TargetXmm, Source, DataType
 .ifeqs "\DataType\()","S8"
-        movsbl  \TargetXmm\(),BYTE PTR \Source\()
+        vpmovsxbd \TargetXmm\(),BYTE PTR \Source\()
 .else
-        movzbl  \TargetXmm\(),BYTE PTR \Source\()
+        vpmovzxbd \TargetXmm\(),BYTE PTR \Source\()
 .endif
-        vpbroadcastd \Target\(),\TargetXmm\()
+        vpbroadcastd \TargetYmm\(),\TargetXmm\()
         .endm
 
 /*++
@@ -228,7 +230,7 @@ C_UNDERSCORE(MlasQLinear\OpName\()\DataType\()KernelAvx2):
         cmp     rcx,QWORD PTR 1
         jz      .LQLinear\OpName\()\DataType\()Avx2Process8EntranceVectorOnScalar
         cmp     rcx,.LQLinearBinaryElementwiseFrame_LengthA[rsp]
-        jae     .LQLinear\OpName\()\DataType\()Avx2Process8Loop
+        jae     .LQLinear\OpName\()\DataType\()Avx2Process8LoopVectorOnVector
         mov     rcx,.LQLinearBinaryElementwiseFrame_LengthA[rsp]
         jmp     .LQLinear\OpName\()\DataType\()Avx2Process8LoopVectorOnVector
 
