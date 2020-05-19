@@ -298,7 +298,7 @@ MlasQLinearAddKernel(
 
     size_t N = std::max(LengthA, LengthB);
     if (LengthA == 1) {
-        auto IntegerVectorA = MlasBroadcastInt32x4((int32_t)*InputA));
+        auto IntegerVectorA = MlasBroadcastInt32x4((int32_t)*InputA);
         auto FloatVectorA = MlasDequantizeLinearVector(IntegerVectorA, ScaleVectorA, ZeroPointVectorA);
         while (N >= 4) {
             auto IntegerVectorB = MlasQuantizeLinearUnpackBytes<DataType>(MlasBroadcastInt32x4(*((const int32_t*)InputB)));
@@ -321,7 +321,7 @@ MlasQLinearAddKernel(
         }
     }
     else if (LengthB == 1) {
-        auto IntegerVectorB = MlasBroadcastInt32x4((int32_t)*InputB));
+        auto IntegerVectorB = MlasBroadcastInt32x4((int32_t)*InputB);
         auto FloatVectorB = MlasDequantizeLinearVector(IntegerVectorB, ScaleVectorB, ZeroPointVectorB);
         while (N >= 4) {
             auto IntegerVectorA = MlasQuantizeLinearUnpackBytes<DataType>(MlasBroadcastInt32x4(*((const int32_t*)InputA)));
@@ -370,10 +370,10 @@ MlasQLinearAddKernel(
 
     if (N > 0) {
         auto IntegerVectorA = (LengthA == 1) ?
-                MlasBroadcastInt32x4((int32_t)*InputA)) :
+                MlasBroadcastInt32x4((int32_t)*InputA) :
                 MlasQuantizeLinearUnpackBytes<DataType>(MlasBroadcastInt32x4(*((const int32_t*)InputA)));
         auto IntegerVectorB = (LengthB == 1) ?
-                MlasBroadcastInt32x4((int32_t)*InputB)) :
+                MlasBroadcastInt32x4((int32_t)*InputB) :
                 MlasQuantizeLinearUnpackBytes<DataType>(MlasBroadcastInt32x4(*((const int32_t*)InputB)));
         auto FloatVectorC = MlasAddFloat32x4(
                 MlasDequantizeLinearVector(IntegerVectorA, ScaleVectorA, ZeroPointVectorA),
