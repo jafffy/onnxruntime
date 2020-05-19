@@ -255,7 +255,7 @@ C_UNDERSCORE(MlasQLinear\OpName\()\DataType\()KernelAvx2):
         \OpInstruction  ymm9,ymm8,ymm9          # \OpName\() two float values
 
         vdivps  ymm9,ymm9,ymm2                  # Quantize 8 values, / ScaleC
-        add     rdi,rax                         # one out-of-order instructions
+        add     rdx,rax                         # one out-of-order instructions
         vcvtps2dq ymm9,ymm9                     # nearbyintf()
         vpmaxsd ymm9,ymm9,ymm7
         vpminsd ymm9,ymm9,ymm6
