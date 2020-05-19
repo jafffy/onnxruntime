@@ -56,9 +56,9 @@ Arguments:
 
         .macro BroadcastByteDWords Target, TargetXmm, Source, DataType
 .ifeqs "\DataType\()","S8"
-        movsx     \TargetXmm\(),BYTE PTR \Source\()
+        movsbl  \TargetXmm\(),BYTE PTR \Source\()
 .else
-        movzx     \TargetXmm\(),BYTE PTR \Source\()
+        movzbl  \TargetXmm\(),BYTE PTR \Source\()
 .endif
         vpbroadcastd \Target\(),\TargetXmm\()
         .endm
@@ -106,9 +106,9 @@ Arguments:
 
         .macro SetMax8BitsValue Target, DataType
 .ifeqs "\DataType\()","S8"
-        mov \Target\(),QWORD PTR 127
+        mov     \Target\(),QWORD PTR 127
 .else
-        mov \Target\(),QWORD PTR 255
+        mov     \Target\(),QWORD PTR 255
 .endif
         .endm
 
@@ -130,9 +130,9 @@ Arguments:
 
         .macro SetMin8BitsValue Target, DataType
 .ifeqs "\DataType\()","S8"
-        mov \Target\(),QWORD PTR -128
+        mov     \Target\(),QWORD PTR -128
 .else
-        mov \Target\(),QWORD PTR 0
+        mov     \Target\(),QWORD PTR 0
 .endif
         .endm
 
